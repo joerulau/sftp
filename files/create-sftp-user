@@ -101,11 +101,14 @@ fi
 if [ -n "$dir" ]; then
     IFS=',' read -ra dirArgs <<< "$dir"
     for dirPath in "${dirArgs[@]}"; do
-        dirPath="/home/$user/$dirPath"
+        dirPath="/data/sftp_data/$dirPath"
         if [ ! -d "$dirPath" ]; then
             log "Creating directory: $dirPath"
             mkdir -p "$dirPath"
-            chown -R "$uid:users" "$dirPath"
+            chown -R "$uid:$gid" "$dirPath"
+            chmod 770 "$dirPath"
+            chmod g+s "$dirPath" # 新建子目录及文件 继承属组
+            setfacl -d -m u::rwx,g::rwx,o::--- "$dirPath" # 新建子目录及文件 继承权限
         else
             log "Directory already exists: $dirPath"
         fi
