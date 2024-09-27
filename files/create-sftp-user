@@ -108,7 +108,7 @@ if [ -n "$dir" ]; then
             chown -R "$uid:$gid" "$dirPath"
             chmod 770 "$dirPath"
             chmod g+s "$dirPath" # 新建子目录及文件 继承属组
-            setfacl -d -m u::rwx,g::rwx,o::--- "$dirPath" # 新建子目录及文件 继承权限
+            # setfacl -d -m u::rwx,g::rwx,o::--- "$dirPath" # 新建子目录及文件 继承权限
         else
             log "Directory already exists: $dirPath"
         fi
